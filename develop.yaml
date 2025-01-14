@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/develop/django/Dockerfile
+    volumes:
+      - .:/app:z
+      - static_volume:/app/staticfiles
+      - media_volume:/app/medafiles
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.envs/.develop/.django
+      - ./.envs/.develop/.postgres
+    depends_on:
+      - postgres
+      - mailhog
+    command: /start
+    networks:
+      - blog-api
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/develop/postgres/Dockerfile
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_posgres_data_backups:/backups
+    env_file:
+      - ./.envs/.develop/.postgres
+    networks:
+      - blog-api
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - blog-api
+
+networks:
+  blog-api:
+    driver: bridge
+
+volumes:
+  static_volume:
+  media_volume:
+  local_postgres_data: {}
+  local_posgres_data_backups: {}
