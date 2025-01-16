@@ -1,4 +1,3 @@
-
 from .base import * #noqa
 from .base import env
 # Quick-start development settings - unsuitable for production
