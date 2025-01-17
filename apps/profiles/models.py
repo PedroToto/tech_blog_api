@@ -11,7 +11,7 @@ class Profile(TimeStampModel):
     class Gender(models.TextChoices):
         MALE = ("M", _("Male"),)
         FEMALE = ("F", _("Female"),)
-        UNSAID = ("U", _("Don't want to tell"),)
+        UNSAID = ("NS", _("Not Specified"),)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     phone_number = PhoneNumberField(
         verbose_name=_("Phone number"), 
@@ -39,7 +39,7 @@ class Profile(TimeStampModel):
         blank=False,
         null=False,
     )
-    Profile_photo = models.ImageField(
+    profile_photo = models.ImageField(
         verbose_name=_("Profile photo"), 
         default="/profile_default.png")
     twitter_handle = models.CharField(
