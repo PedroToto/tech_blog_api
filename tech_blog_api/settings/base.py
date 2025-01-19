@@ -50,12 +50,15 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'taggit',
 ]
 
 LOCAL_APPS = [
     'apps.profiles',
     'apps.common',
     'apps.users',
+    'apps.articles',
+    'apps.ratings',
 ]
 
 

@@ -31,6 +31,7 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(),
          name="password_reset_confirm"),
     path("api/v1/profiles/", include("apps.profiles.urls")),
+    path("api/v1/articles/", include("apps.articles.urls")),
 ]
 
 admin.site.site_header = "Tech Blog API Admin"
