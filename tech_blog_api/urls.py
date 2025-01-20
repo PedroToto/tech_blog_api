@@ -34,6 +34,7 @@ urlpatterns = [
     path("api/v1/articles/", include("apps.articles.urls")),
     path("api/v1/ratings/", include("apps.ratings.urls")),
     path("api/v1/bookmarks/", include("apps.bookmars.urls")),
+    path("api/v1/responses/", include("apps.responses.urls")),
 ]
 
 admin.site.site_header = "Tech Blog API Admin"

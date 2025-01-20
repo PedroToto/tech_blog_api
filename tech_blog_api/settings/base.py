@@ -60,6 +60,7 @@ LOCAL_APPS = [
     'apps.articles',
     'apps.ratings',
     'apps.bookmars',
+    "apps.responses",
 ]
 
 

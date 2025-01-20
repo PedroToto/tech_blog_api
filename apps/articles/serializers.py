@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from apps.articles.models import Article, ArticleView
+from apps.articles.models import Article, ArticleView, Clap
 from apps.profiles.serializers import ProfileSerializer
 from apps.bookmars.models import Bookmark
 from apps.bookmars.serializers import BookmarkSerializer
+from apps.responses.serializers import ResponseSerializer
 
 class TagListField(serializers.Field):
     def to_representation(self, value):
@@ -32,8 +33,17 @@ class ArticleSerializer(serializers.ModelSerializer):
     average_rating = serializers.ReadOnlyField()
     bookmarks = serializers.SerializerMethodField()
     bookmarks_count = serializers.SerializerMethodField()
+    claps_count = serializers.SerializerMethodField()
+    responses = ResponseSerializer(many=True, read_only=True)
+    responses_count = serializers.IntegerField(source="responses.count", read_only=True)
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
+
+    def get_responses_count(self, obj):
+        return obj.responses.count()
+
+    def get_claps_count(self, obj):
+        return obj.claps.count()
 
     def get_bookmarks(self, obj):
         bookmarks = Bookmark.objects.filter(article=obj)
@@ -93,6 +103,9 @@ class ArticleSerializer(serializers.ModelSerializer):
             "average_rating",
             "bookmarks",
             "bookmarks_count",
+            "claps_count",
+            "responses",
+            "responses_count",
             "views",
             "description",
             "body",
@@ -100,3 +113,11 @@ class ArticleSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+
+class ClapSerializer(serializers.ModelSerializer):
+    article_title = serializers.CharField(source="article.title", read_only=True)
+    user_first_name = serializers.CharField(source="user.first_name", read_only= True)
+
+    class Meta:
+        model = Clap
+        fields = ["id", "user_first_name", "article_title"]
