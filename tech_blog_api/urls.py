@@ -32,6 +32,8 @@ urlpatterns = [
          name="password_reset_confirm"),
     path("api/v1/profiles/", include("apps.profiles.urls")),
     path("api/v1/articles/", include("apps.articles.urls")),
+    path("api/v1/ratings/", include("apps.ratings.urls")),
+    path("api/v1/bookmarks/", include("apps.bookmars.urls")),
 ]
 
 admin.site.site_header = "Tech Blog API Admin"
